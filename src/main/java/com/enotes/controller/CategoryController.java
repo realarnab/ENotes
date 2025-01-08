@@ -1,5 +1,7 @@
 package com.enotes.controller;
 
+import com.enotes.dto.CategoryDto;
+import com.enotes.dto.CategoryResponse;
 import com.enotes.entity.Category;
 import com.enotes.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/saved")
-    public ResponseEntity<?> saveCategory(@RequestBody Category category){
-        boolean saved = categoryService.saveCategory(category);
+    public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto){
+        boolean saved = categoryService.saveCategory(categoryDto);
         if (saved){
             return new ResponseEntity<>("saved successfully", HttpStatus.CREATED);
         } else {
@@ -27,13 +29,23 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/create")
+    @GetMapping("/category")
     public ResponseEntity<?> getAllCategories() {
-        List<Category> allCategories = categoryService.getAllCategory();
+        List<CategoryDto> allCategories = categoryService.getAllCategory();
         if (ObjectUtils.isEmpty(allCategories)) {
             return ResponseEntity.noContent().build();
         } else {
             return new ResponseEntity<>(allCategories, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/active-category")
+    public ResponseEntity<?> getActiveCategory(){
+        List<CategoryResponse> allActiveCategory = categoryService.getAllActiveCategory();
+        if (ObjectUtils.isEmpty(allActiveCategory)){
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(allActiveCategory, HttpStatus.OK);
         }
     }
 }
