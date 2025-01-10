@@ -3,6 +3,7 @@ package com.enotes.controller;
 import com.enotes.dto.CategoryDto;
 import com.enotes.dto.CategoryResponse;
 import com.enotes.entity.Category;
+import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,8 +51,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id){
-        CategoryDto category = categoryService.getCategoryById(id);
+    public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) throws ResourceNotFoundException {
+        CategoryDto category = categoryService. getCategoryById(id);
         if (ObjectUtils.isEmpty(category)){
             return new ResponseEntity<>("Category not found with Id: "+id, HttpStatus.NOT_FOUND);
         }
