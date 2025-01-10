@@ -3,6 +3,7 @@ package com.enotes.service.impl;
 import com.enotes.dto.CategoryDto;
 import com.enotes.dto.CategoryResponse;
 import com.enotes.entity.Category;
+import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.repository.CategoryRepository;
 import com.enotes.service.CategoryService;
 import org.modelmapper.ModelMapper;
@@ -50,9 +51,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto getCategoryById(Integer id) {
-        Optional<Category> byId = categoryRepository.findByIdAndIsDeletedFalse(id);
-        return byId.map(this::mapToDto).orElse(null);
+    public CategoryDto getCategoryById(Integer id) throws ResourceNotFoundException {
+        Category byId = categoryRepository.findByIdAndIsDeletedFalse(id).orElseThrow(()-> new ResourceNotFoundException("Category Not Found with Id: "+id));
+        return mapToDto(byId);
     }
 
     @Override
