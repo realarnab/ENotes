@@ -12,6 +12,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -38,14 +39,32 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> getAllCategory() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findByIsDeletedFalse();
         return categories.stream().map(e -> modelMapper.map(e, CategoryDto.class)).toList();
     }
 
     @Override
     public List<CategoryResponse> getAllActiveCategory() {
-        List<Category> all = categoryRepository.findByIsActiveTrue();
+        List<Category> all = categoryRepository.findByIsActiveTrueAndIsDeletedFalse();
         return all.stream().map(e -> modelMapper.map(e, CategoryResponse.class)).toList();
+    }
+
+    @Override
+    public CategoryDto getCategoryById(Integer id) {
+        Optional<Category> byId = categoryRepository.findByIdAndIsDeletedFalse(id);
+        return byId.map(this::mapToDto).orElse(null);
+    }
+
+    @Override
+    public boolean deleteCategoryById(Integer id) {
+        Optional<Category> byId = categoryRepository.findById(id);
+        if (byId.isPresent()){
+            Category category = byId.get();
+            category.setDeleted(true);
+            categoryRepository.save(category);
+            return true;
+        }
+        return false;
     }
 
     public Category mapToEntity(CategoryDto dto){

@@ -11,4 +11,8 @@ public interface CategoryService {
     public boolean saveCategory(CategoryDto categoryDto);
     public List<CategoryDto> getAllCategory();
     public List<CategoryResponse> getAllActiveCategory();
+
+    CategoryDto getCategoryById(Integer id);
+
+    boolean deleteCategoryById(Integer id);
 }
