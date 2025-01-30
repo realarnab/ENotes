@@ -15,18 +15,8 @@ import java.util.Date;
 public class CategoryDto {
     
     private Integer id;
-
-    @NotBlank
-    @Min(value = 1)
-    @Max(value = 20)
     private String name;
-
-    @NotBlank
-    @Min(value = 1)
-    @Max(value = 100)
     private String description;
-
-    @NotNull
     private boolean isActive;
     private boolean isDeleted;
     private Integer createdBy;
