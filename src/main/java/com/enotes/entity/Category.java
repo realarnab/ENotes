@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
@@ -14,7 +15,8 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+@EntityListeners(AuditingEntityListener.class)
+public class Category extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +30,17 @@ public class Category {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    @Column(name = "created_by")
-    private Integer createdBy;
-
-    @Column(name = "created_date")
-    private Date createdOn;
-
-    @Column(name = "update_by", nullable = true)
-    private Integer updateBy;
-
-    @Column(name = "updated_date", nullable = true)
-    private Date updatedOn;
+//    @Column(name = "created_by")
+//    private Integer createdBy;
+//
+//    @Column(name = "created_date")
+//    private Date createdOn;
+//
+//    @Column(name = "update_by", nullable = true)
+//    private Integer updateBy;
+//
+//    @Column(name = "updated_date", nullable = true)
+//    private Date updatedOn;
 
     public Integer getId() {
         return id;
@@ -60,21 +62,21 @@ public class Category {
         return isDeleted;
     }
 
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public Integer getUpdateBy() {
-        return updateBy;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
+//    public Integer getCreatedBy() {
+//        return createdBy;
+//    }
+//
+//    public Date getCreatedOn() {
+//        return createdOn;
+//    }
+//
+//    public Integer getUpdateBy() {
+//        return updateBy;
+//    }
+//
+//    public Date getUpdatedOn() {
+//        return updatedOn;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -92,19 +94,18 @@ public class Category {
         isDeleted = deleted;
     }
 
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public void setUpdateBy(Integer updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
+//    public void setCreatedBy(Integer createdBy) {
+//        this.createdBy = createdBy;
+//    }
+//
+//    public void setCreatedOn(Date createdOn) {
+//        this.createdOn = createdOn;
+//    }
+//
+//    public void setUpdateBy(Integer updateBy) {
+//        this.updateBy = updateBy;
+//
+//    public void setUpdatedOn(Date updatedOn) {
+//        this.updatedOn = updatedOn;
+//    }
 }
