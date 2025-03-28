@@ -3,10 +3,12 @@ package com.enotes.service.impl;
 import com.enotes.dto.CategoryDto;
 import com.enotes.dto.CategoryResponse;
 import com.enotes.entity.Category;
+import com.enotes.exception.ExistDataException;
 import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.repository.CategoryRepository;
 import com.enotes.service.CategoryService;
 import com.enotes.utils.Validation;
+import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,9 +31,15 @@ public class CategoryServiceImpl implements CategoryService {
     private Validation validation;
 
     @Override
-    public boolean saveCategory(CategoryDto categoryDto) {
+    public boolean saveCategory(CategoryDto categoryDto) throws ExistDataException {
         //validation checking
         validation.categoryValidation(categoryDto);
+
+        //check if the category is already exist or not
+        Boolean check = categoryRepository.existsByName(categoryDto.getName().trim());
+        if(check){
+            throw new ExistDataException("Data already exist.");
+        }
 
         Category category = mapToEntity(categoryDto);
 

@@ -3,6 +3,7 @@ package com.enotes.controller;
 import com.enotes.dto.CategoryDto;
 import com.enotes.dto.CategoryResponse;
 import com.enotes.entity.Category;
+import com.enotes.exception.ExistDataException;
 import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.service.CategoryService;
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/saved")
-    public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto){
+    public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto) throws ExistDataException {
         boolean saved = categoryService.saveCategory(categoryDto);
         if (saved){
             return new ResponseEntity<>("saved successfully", HttpStatus.CREATED);
